@@ -1,0 +1,8 @@
+Assembly-CSharp.csproj
+Unity Music Quiz.sln
+bin/*
+.vs/
+obj/*
+Temp/*
+Logs/*
+*.htm
