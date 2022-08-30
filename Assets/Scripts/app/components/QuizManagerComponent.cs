@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MusicQuiz;
 
-public class QuizComponent : MonoBehaviour
+public class QuizManagerComponent : MonoBehaviour
 {
     [SerializeField]
     private TextAsset textJSON;
@@ -14,9 +14,8 @@ public class QuizComponent : MonoBehaviour
         quizData = MusicQuiz.QuizFactory.createQuizData(textJSON.text);
     }
 
-    void Start()
-    {
-        Debug.Log(quizData.quizs.Length);
-        Debug.Log(quizData.quizs[0].id);
+    public Quiz getQuiz(int id) {
+        return quizData.quizs[id];
     }
+
 }
