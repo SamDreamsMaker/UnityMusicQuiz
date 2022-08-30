@@ -24,7 +24,7 @@ Please make the code available on Github and send the repository link via email.
 
 ## Final words
 
-Let me know if those instructions are unclear or need extra information: you can send me an email at crenn@freshplanet.com
+Let me know if those instructions are unclear or need extra information: you can send me an email at ***.com
 
 We usually expect this coding test to be done in about a week or two.
 
