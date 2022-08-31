@@ -6,5 +6,6 @@ namespace MusicQuiz
         public string id;
         public int answerIndex;
         public Choice[] choices;
+        public Song song;
     }
 }

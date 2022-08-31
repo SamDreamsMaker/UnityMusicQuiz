@@ -1,3 +1,5 @@
+using System;
+
 namespace MusicQuiz
 {
     [System.Serializable]
@@ -5,5 +7,9 @@ namespace MusicQuiz
     {
         public string artist;
         public string title;
+
+        public string getTextData() {
+            return artist + Environment.NewLine + title;
+        }
     }
 }

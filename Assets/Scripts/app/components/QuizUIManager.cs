@@ -18,7 +18,7 @@ public class QuizUIManager : MonoBehaviour
     void createQuizMainUI()
     {
         GameObject quizMainUIGO = Resources.Load<GameObject>(QUIZ_MAIN_UI_LOCATION);
-        GameObject.Instantiate(quizMainUIGO, Vector3.zero, Quaternion.identity);
-        quizMainUIGO.GetComponent<QuizMainUI>().setQuizManagerComponent(quizManagerComponent);
+        GameObject result = GameObject.Instantiate(quizMainUIGO, Vector3.zero, Quaternion.identity);
+        result.GetComponent<QuizMainUI>().setQuizManagerComponent(quizManagerComponent);
     }
 }
