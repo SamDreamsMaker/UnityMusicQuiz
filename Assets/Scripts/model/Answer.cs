@@ -1,5 +1,3 @@
-using System;
-
 namespace MusicQuiz
 {
     public class Answer
@@ -8,7 +6,7 @@ namespace MusicQuiz
         public int id;
         public bool win;
 
-        public Anwser(int anId, bool aWin) {
+        public Answer(int anId, bool aWin) {
             id = anId;
             win = aWin;
         }

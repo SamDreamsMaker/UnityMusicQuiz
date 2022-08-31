@@ -11,6 +11,8 @@ public class QuizMainUI : MonoBehaviour
     private QuizManagerComponent quizManagerComponent;
     [SerializeField]
     private GameObject choosePanel, questionPanel, resultPanel;
+
+    [Header("Question Panel")][Space(10)]
     [SerializeField]
     private GameObject questionTitle;
     [SerializeField]
@@ -21,10 +23,14 @@ public class QuizMainUI : MonoBehaviour
     private GameObject resultText, resultBackground;
     [SerializeField]
     private GameObject nextStepButton, nextStepText;
+
+    [Header("Web Content Containers")]
     [SerializeField]
     private AudioSource audioSource;
     [SerializeField]
     private GameObject songImage;
+
+    [Header("Result Panel")][Space(10)]
     [SerializeField][Tooltip("The texts where result are displayed at the end of the quiz")]
     private GameObject[] textResultAnswers;
     [SerializeField][Tooltip("The score displayed at the end of the quiz")]
@@ -42,7 +48,7 @@ public class QuizMainUI : MonoBehaviour
     private const string SCORE = "Score : ";
     private const string RIGHT = "Right";
     private const string WRONG = "Wrong";
-    private const string SEPARATOR = " - ";
+    private const int MAX_QUESTION_ID = 4;
 
     /**** INITIALIZATION ****/
     public void setQuizManagerComponent(QuizManagerComponent aQuizManagerComponent) {
@@ -50,7 +56,6 @@ public class QuizMainUI : MonoBehaviour
     }
 
     public void startQuiz(int id) {
-        Debug.Log(quizManagerComponent);
         currentQuiz = quizManagerComponent.getQuiz(id);
         resetQuiz();
         goToQuestions();
@@ -101,7 +106,7 @@ public class QuizMainUI : MonoBehaviour
         displayNextButton(false);
         disableQuestionResult(false);
         activeSongImage(false);
-        activeSongImage(false);
+        activeSongClip(false);
         answers.Clear();
     }
     public void resetQuestionId() {
@@ -151,7 +156,9 @@ public class QuizMainUI : MonoBehaviour
     }
 
     public void goNextStep() {
-        if (currentQuestionId == 3) goToResult();
+        activeSongImage(false);
+        activeSongClip(false);
+        if (currentQuestionId == MAX_QUESTION_ID) goToResult();
         else updateQuestion(true);
     }
     /**** UPDATE QUESTION ****/
@@ -203,7 +210,7 @@ public class QuizMainUI : MonoBehaviour
         }
         answers.Add(currentQuestionId, new Answer(id, win));
         displayNextButton(true);
-        if(currentQuestionId == 3) {
+        if(currentQuestionId == MAX_QUESTION_ID) {
             nextStepText.GetComponent<Text>().text = SHOW_MY_SCORE;
         } else {
             nextStepText.GetComponent<Text>().text = NEXT_QUESTION;
@@ -214,10 +221,10 @@ public class QuizMainUI : MonoBehaviour
         resultBackground.SetActive(true);
         string result;
         if (win) {
-            result = "Right";
+            result = RIGHT;
             resultBackground.GetComponent<Image>().color = Color.green;
         } else {
-            result = "Wrong";
+            result = WRONG;
             resultBackground.GetComponent<Image>().color = Color.red;
         }
         resultText.GetComponent<Text>().text = result;
@@ -230,13 +237,16 @@ public class QuizMainUI : MonoBehaviour
     }
     /**** SHOW THE SCORE & RESULT ****/
     public void displayResult() {
-        int count;
+        int count = 0;
         foreach (GameObject text in textResultAnswers) {
             bool win = answers[count].win;
             string winText;
-            if (win) winText = RIGHT;
-            else winText = WRONG;
-            text.GetComponent<Text>().text = currentQuiz.questions[count].song.getTextData() + SEPARATOR + winText;
+            if (win) {
+                winText = RIGHT;
+            } else {
+                winText = WRONG;
+            }
+            text.GetComponent<Text>().text = currentQuiz.questions[count].song.getTextData() + Environment.NewLine + winText;
             count++;
         }
         scoreText.GetComponent<Text>().text = SCORE + currentScore.ToString();
