@@ -1977,7 +1977,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0
-  m_Text: 'Quiz 1
+  m_Text: 'Playlist 1
 
 '
 --- !u!1 &5532294034534115551
@@ -2998,7 +2998,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0
-  m_Text: 'Quiz 2
+  m_Text: 'Playlist 2
 
 '
 --- !u!1 &8271383390350596110
@@ -3079,7 +3079,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0
-  m_Text: 'Quiz 3
+  m_Text: 'Playlist 3
 
 '
 --- !u!1 &8803489022848111797
