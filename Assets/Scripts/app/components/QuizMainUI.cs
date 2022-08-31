@@ -39,8 +39,7 @@ public class QuizMainUI : MonoBehaviour
     private Quiz currentQuiz;
     private int currentQuestionId;
     private Question currentQuestion;
-    private int currentScore;
-    private Dictionary<int, Answer> answers = new Dictionary<int, Answer>();
+    private PlayerScore playerScore;
 
     private const string PREFIX_QUESTION = "Question n°";
     private const string SHOW_MY_SCORE = "Show my score";
@@ -58,6 +57,7 @@ public class QuizMainUI : MonoBehaviour
     public void startQuiz(int id) {
         currentQuiz = quizManagerComponent.getQuiz(id);
         resetQuiz();
+        playerScore = new PlayerScore();
         goToQuestions();
         updateQuestion(false);
     }
@@ -101,20 +101,17 @@ public class QuizMainUI : MonoBehaviour
     /**** RESET VARIABLES ***/
     public void resetQuiz() {
         resetQuestionId();
-        resetScore();
         updateQuestionTitleId();
         displayNextButton(false);
         disableQuestionResult(false);
         activeSongImage(false);
         activeSongClip(false);
-        answers.Clear();
+        playerScore = null;
     }
     public void resetQuestionId() {
         currentQuestionId = 0;
     }
-    public void resetScore() {
-        currentScore = 0;
-    }
+
 
     /**** NAVIGATION ****/
     public void closeChooseMenu() {
@@ -203,12 +200,12 @@ public class QuizMainUI : MonoBehaviour
         ColorForSelectedButton(id);
         bool win = currentQuestion.answerIndex == id;
         if (win) {
-            currentScore++;
+            playerScore.increaseScore();
             updateQuestionResult(true);
         } else {
             updateQuestionResult(false);
         }
-        answers.Add(currentQuestionId, new Answer(id, win));
+        playerScore.addAnswer(currentQuestionId, id, win);
         displayNextButton(true);
         if(currentQuestionId == MAX_QUESTION_ID) {
             nextStepText.GetComponent<Text>().text = SHOW_MY_SCORE;
@@ -239,7 +236,7 @@ public class QuizMainUI : MonoBehaviour
     public void displayResult() {
         int count = 0;
         foreach (GameObject text in textResultAnswers) {
-            bool win = answers[count].win;
+            bool win = playerScore.hasWin(count);
             string winText;
             if (win) {
                 winText = RIGHT;
@@ -249,6 +246,6 @@ public class QuizMainUI : MonoBehaviour
             text.GetComponent<Text>().text = currentQuiz.questions[count].song.getTextData() + Environment.NewLine + winText;
             count++;
         }
-        scoreText.GetComponent<Text>().text = SCORE + currentScore.ToString();
+        scoreText.GetComponent<Text>().text = SCORE + playerScore.getScore().ToString();
     }
 }
